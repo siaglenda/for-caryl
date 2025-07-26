@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Caryl Only</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Quicksand:wght@400;600&display=swap');
+
+    body {
+      margin: 0;
+     font-family: 'Comic Sans MS', sans-serif;
+      background: #fdf6e3 url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      padding: 2rem 1rem;
+      color: #333;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #container {
+      max-width: 900px;
+      margin: auto;
+      background: #fffefb;
+      padding: 2rem;
+      border: 1px solid #e0d6c3;
+      border-radius: 16px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05), 0 10px 25px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 2s ease;
+    }
+
+    h2 {
+      font-family: 'Comic Sans MS', cursive;
+      font-size: 2rem;
+      color: #a1536b;
+      text-align: center;
+    }
+
+    input, button {
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 1rem;
+      width: 100%;
+      margin-top: 1rem;
+      box-sizing: border-box;
+    }
+
+    input {
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #a1536b;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #873f5b;
+    }
+
+    #letter {
+      display: none;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.9;
+      text-align: justify;
+      margin-top: 2rem;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .large-photo {
+      width: 300px;
+      height: 300px;
+      border-radius: 20px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      margin: 10px;
+    }
+
+    .large-photo:hover {
+      transform: scale(2.05);
+    }
+
+    .heart-divider {
+      border: none;
+      height: 20px;
+      background: url('flower.png') repeat-x center;
+      background-size: contain;
+      margin: 2rem 0;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .flower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      background-image: url('flower.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: fall 6s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      0% { top: -10%; opacity: 1; transform: rotate(0deg); }
+      100% { top: 110%; opacity: 0; transform: rotate(360deg); }
+    }
+
+    @media (max-width: 600px) {
+      .large-photo {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <div id="form">
+    <h2>📩 Enter your nickname in our Messenger as Passcode to Open the Letter 📩 </h2>
+    <input type="password" id="passcode" placeholder="Enter Passcode"/>
+    <button onclick="checkPass()">Open Letter</button>
+  </div>
+
+  <div id="letter">
+    <div class="letter-content">
+      <h2>Dear Caryl Anne Semilla,</h2>
+        <p>Hii!!!</p>
+        <p>Yow yoww! I can't believe nakagawa me ng ganto. Apkors through the help of YouTube and ChatGPT haha. Sauur, na-open mo na siguro i2 and I just want to take this moment to say thank you, as in, soafer thank you. Thank you for being my friend through all these years. Wao HAHAHA. Looking back, I realized kung gaano ako ka-swerte to have someone like you in my college life. You're not just any friend. You’re one of those special to me, those who made me understand the true meaning and value of friendship. </p>
+        <p>You’ve shown me that friendship isn’t just about tawanan or fun times, but also about being there, kahit tahimik lang or ordinary moments lang. You’ve taught me what it means to truly care, to be present, and to stay, simply because you value the person. </p>
+        <p>I admire you so much. You’re so cool, in the truest sense of the word. Generous, genuine, and kind. You are beautiful in your own way. You're one of the brainiest and most talented people I know. That’s something I really look up to. I do really admire youu. Not because of just how smart or cool you are, but because your humor and vibe were something I genuinely liked. Gawd this is so cringeyy but I remember, tuwing may pasok datii, lagi kong hinahanap kung nasa room ka na ba or nasa dorm pa haha, but yeahh, yown I just kept it with me and continued being friends with u. Though may time dati na iniiwasan ko maging super close sayo kase auq ma-attach nang sobra. Idk pero I think mas naging close pa nga us haha. You know naman na di ako ma-effort na friend pero ikawwwww super effort ka to keep and stay in friendships. Total opposite us kumbaga. I really wish na hindi mawala communication natin even after graduation. Sooooo thank you for staying and listening to all my worthless rants.</p>
+        <p>And of course, CONGRATS! GRADUATE NA TAYO!! I’m so proud of you, Engr. Caryl! Alam kong hindi naging madali, pero you did it—and you did it so well. You deserve all the recognition and success coming your way. </p>
+        <p>Thank you for everything. Sa mga kayabangan, jokes, kwento, and all the little moments that made our friendship special. I appreciate you more than you probably know, and I’m just really, really grateful that I get to call you my friend.</p>
+        <p style="text-align: right;">With all my thanks,<br><strong>Glenda Sia</strong></p>
+    </div>
+
+    <div style="text-align:center; margin-top: 2rem;">
+      <img src="photo3.jpg" class="large-photo" alt="Photo 3"/>
+      <img src="photo2.jpg" class="large-photo" alt="Photo 2"/>
+      <img src="photo1.jpg" class="large-photo" alt="Photo 1"/>
+    </div>
+    <h2>🌸 Wanna Leave a Reply? 🌸</h2>
+<input type="text" id="replyName" placeholder="Your nickname" style="width: 100%; padding: 10px; border-radius: 10px; margin-bottom: 10px;" />
+<textarea id="replyInput" placeholder="Write your message here..." rows="4" style="width: 100%; padding: 10px; border-radius: 10px;"></textarea>
+<button onclick="submitReply()" style="margin-top: 10px;">Submit</button>
+<div id="replyContainer" style="margin-top: 2rem;"></div>
+  </div>
+</div>
+
+<audio id="bgMusic" loop autoplay>
+  <source src="Saranggola.mp3" type="audio/mpeg" />
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  function checkPass() {
+    const input = document.getElementById('passcode').value;
+    if (input.toLowerCase() === 'rylca') {
+      document.getElementById('form').style.display = 'none';
+      document.getElementById('letter').style.display = 'block';
+      document.getElementById('bgMusic').play();
+    } else {
+      alert('Wrong passcode! Try again. 💌');
+    }
+  }
+
+  // Falling flowers animation
+  setInterval(() => {
+    const flower = document.createElement('div');
+    flower.className = 'flower';
+    flower.style.left = Math.random() * 100 + 'vw';
+    flower.style.animationDuration = 3 + Math.random() * 2 + 's';
+    document.body.appendChild(flower);
+    setTimeout(() => flower.remove(), 6000);
+  }, 400);
+</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAQakWvZBacLYSG1BuROGJ03erD7-6PkYw",
+    authDomain: "caryl-replies.firebaseapp.com",
+    projectId: "caryl-replies",
+    storageBucket: "caryl-replies.firebasestorage.app",
+    messagingSenderId: "692172640175",
+    appId: "1:692172640175:web:0b733df1ddc6f89106e95a",
+    measurementId: "G-L9QXZKHET4"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Load existing replies in real-time
+  const replyContainer = document.getElementById("replyContainer");
+  onSnapshot(collection(db, "replies"), (snapshot) => {
+    replyContainer.innerHTML = ""; // Clear current replies
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+const name = data.name || "Anonymous";
+const text = data.text;
+const date = data.createdAt?.toDate?.().toLocaleString() || "just now";
+
+const p = document.createElement("p");
+p.innerHTML = `<strong>${name}</strong> <span style="font-size:0.8em; color:#666;">(${date})</span><br>${text}`;
+      p.style = "background:#fff9f2; border-left:5px solid #a1536b; padding:10px; border-radius:8px; margin-bottom:10px;";
+      replyContainer.appendChild(p);
+    });
+  });
+
+  // Handle submission
+  window.submitReply = async function () {
+    const input = document.getElementById("replyInput").value.trim();
+    if (input) {
+      const name = document.getElementById("replyName").value.trim();
+await addDoc(collection(db, "replies"), {
+  name: name || "Anonymous",
+  text: input,
+  createdAt: new Date()
+});
+      document.getElementById("replyInput").value = "";
+    }
+  };
+</script>
+
+</body>
+</html>
