@@ -191,7 +191,8 @@
 </script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } 
+from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyAQakWvZBacLYSG1BuROGJ03erD7-6PkYw",
@@ -208,9 +209,13 @@
 
   // Load existing replies in real-time
   const replyContainer = document.getElementById("replyContainer");
-  onSnapshot(collection(db, "replies"), (snapshot) => {
-    replyContainer.innerHTML = ""; // Clear current replies
-    snapshot.forEach((doc) => {
+// Create query to get latest first
+const q = query(collection(db, "replies"), orderBy("createdAt", "desc"));
+
+onSnapshot(q, (snapshot) => {
+  replyContainer.innerHTML = ""; // Clear current replies
+  snapshot.forEach((doc) => {
+
       const data = doc.data();
 const name = data.name || "Anonymous";
 const text = data.text;
