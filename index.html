@@ -122,39 +122,42 @@
       }
     }
 
-    #slideshow img {
-  animation: fade 1s ease-in-out;
-}
-
-@keyframes fade {
-  from { opacity: 0.4; }
-  to { opacity: 1; }
-}
-
-/* Slideshow Container */
+   /* Slideshow Container */
 #slideshow {
-  max-width: 700px;        /* max size */
-  width: 100%;             /* take up available space */
-  margin: 2rem auto;       /* center horizontally */
-  text-align: center;      /* center images */
+  max-width: 700px;
+  width: 100%;
+  margin: 2rem auto;      /* centers container horizontally */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 0 1rem;        /* small side padding for mobile */
 }
 
 /* Slideshow Images */
 #slideshow img {
-  width: 100%;             /* scale to container */
-  height: auto;            /* keep aspect ratio */
+  display: none;          /* hidden by default; JS will show the active slide */
+  width: auto;
+  max-width: 100%;        /* scales down on small screens */
+  height: auto;
   border-radius: 20px;
   object-fit: cover;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  display: none;           /* hide all by default */
-  animation: fade 1s ease-in-out;
+  margin: 0 auto;         /* centers inside the flex container */
 }
 
-/* Fade animation */
+/* Visible slide (JS will toggle this class) */
+#slideshow img.active {
+  display: block;
+}
+
+/* Fade animation (single definition) */
 @keyframes fade {
   from { opacity: 0.4; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
+
 
   </style>
 </head>
@@ -197,11 +200,14 @@ let slideIndex = 0;
 const slides = document.querySelectorAll("#slideshow img");
 
 function showSlides() {
-  slides.forEach(slide => slide.style.display = "none");
-  slideIndex++;
-  if (slideIndex > slides.length) { slideIndex = 1 }
-  slides[slideIndex-1].style.display = "block";
-  setTimeout(showSlides, 2500); // change slide every 2.5 seconds
+  if (!slides.length) return;
+  // remove active from all
+  slides.forEach(s => s.classList.remove("active"));
+  // show current
+  slides[slideIndex].classList.add("active");
+  // next index
+  slideIndex = (slideIndex + 1) % slides.length;
+  setTimeout(showSlides, 2500);
 }
 showSlides();
 </script>
