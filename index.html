@@ -85,10 +85,6 @@
       margin: 10px;
     }
 
-    .large-photo:hover {
-      transform: scale(2.05);
-    }
-
     .heart-divider {
       border: none;
       height: 20px;
@@ -135,6 +131,31 @@
   to { opacity: 1; }
 }
 
+/* Slideshow Container */
+#slideshow {
+  max-width: 700px;        /* max size */
+  width: 100%;             /* take up available space */
+  margin: 2rem auto;       /* center horizontally */
+  text-align: center;      /* center images */
+}
+
+/* Slideshow Images */
+#slideshow img {
+  width: 100%;             /* scale to container */
+  height: auto;            /* keep aspect ratio */
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  display: none;           /* hide all by default */
+  animation: fade 1s ease-in-out;
+}
+
+/* Fade animation */
+@keyframes fade {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
   </style>
 </head>
 <body>
@@ -162,13 +183,13 @@
         <p style="text-align: right;">With all my thanks,<br><strong>Glenda Sia</strong></p>
     </div>
 
-    <div id="slideshow" style="text-align:center; margin-top: 2rem;">
-  <img src="photo3.jpg" class="large-photo" alt="Photo 3" style="display:block;"/>
-  <img src="photo2.jpg" class="large-photo" alt="Photo 2" style="display:none;"/>
-  <img src="photo1.jpg" class="large-photo" alt="Photo 1" style="display:none;"/>
-  <img src="photo4.jpg" class="large-photo" alt="Photo 4" style="display:none;"/>
-  <img src="photo5.jpg" class="large-photo" alt="Photo 5" style="display:none;"/>
-  <img src="photo6.jpg" class="large-photo" alt="Photo 6" style="display:none;"/>
+    <div id="slideshow">
+  <img src="photo3.jpg" alt="Photo 3"/>
+  <img src="photo2.jpg" alt="Photo 2"/>
+  <img src="photo1.jpg" alt="Photo 1"/>
+  <img src="photo4.jpg" alt="Photo 4"/>
+  <img src="photo5.jpg" alt="Photo 5"/>
+  <img src="photo6.jpg" alt="Photo 6"/>
 </div>
 
 <script>
