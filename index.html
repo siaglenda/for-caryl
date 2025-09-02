@@ -137,14 +137,21 @@
 
 /* Slideshow Images */
 #slideshow img {
-  display: none;          /* hidden by default; JS will show the active slide */
-  width: auto;
-  max-width: 100%;        /* scales down on small screens */
-  height: auto;
+  display: none;
+  width: 500px;      /* same width */
+  height: 350px;     /* same height */
   border-radius: 20px;
-  object-fit: cover;
+  object-fit: cover; /* crops without distortion */
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  margin: 0 auto;         /* centers inside the flex container */
+  margin: 0 auto;
+}
+
+/* mobile adjustment */
+@media (max-width: 600px) {
+  #slideshow img {
+    width: 100%;
+    height: 250px;
+  }
 }
 
 /* Visible slide (JS will toggle this class) */
@@ -158,6 +165,32 @@
   to   { opacity: 1; }
 }
 
+#slideshow {
+  position: relative;   /* so arrows can float inside */
+}
+
+#slideshow .prev,
+#slideshow .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(161, 83, 107, 0.7);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  transition: background 0.3s ease;
+}
+
+#slideshow .prev:hover,
+#slideshow .next:hover {
+  background: rgba(161, 83, 107, 1);
+}
+
+#slideshow .prev { left: 10px; }
+#slideshow .next { right: 10px; }
 
   </style>
 </head>
@@ -195,24 +228,45 @@
   <img src="photo6.jpg" alt="Photo 6"/>
   <img src="photo7.jpg" alt="Photo 7"/>
   <img src="photo8.jpg" alt="Photo 8"/>
+
+      <!-- Navigation buttons -->
+  <button class="prev" onclick="changeSlide(-1)">❮</button>
+  <button class="next" onclick="changeSlide(1)">❯</button>
+      
 </div>
 
 <script>
 let slideIndex = 0;
 const slides = document.querySelectorAll("#slideshow img");
+let autoSlide; // for auto-sliding
 
-function showSlides() {
+function showSlides(index) {
   if (!slides.length) return;
-  // remove active from all
+  
   slides.forEach(s => s.classList.remove("active"));
-  // show current
+  slideIndex = (index + slides.length) % slides.length; // loop around
   slides[slideIndex].classList.add("active");
-  // next index
-  slideIndex = (slideIndex + 1) % slides.length;
-  setTimeout(showSlides, 2500);
 }
-showSlides();
+
+// Auto slide
+function startAutoSlide() {
+  autoSlide = setInterval(() => {
+    changeSlide(1);
+  }, 2500);
+}
+
+// Manual navigation (arrows)
+function changeSlide(n) {
+  clearInterval(autoSlide); // stop auto when user clicks
+  showSlides(slideIndex + n);
+  startAutoSlide(); // restart auto
+}
+
+// Initialize slideshow
+showSlides(slideIndex);
+startAutoSlide();
 </script>
+
 
     <h2>🌸 Wanna Leave a Reply? 🌸</h2>
 <input type="text" id="replyName" placeholder="Your nickname" style="width: 100%; padding: 10px; border-radius: 10px; margin-bottom: 10px;" />
