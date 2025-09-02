@@ -28,6 +28,8 @@
       border-radius: 16px;
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05), 0 10px 25px rgba(0, 0, 0, 0.1);
       animation: fadeIn 2s ease;
+      position: relative;
+      z-index: 2; /* keep content above falling flowers */
     }
 
     h2 {
@@ -62,9 +64,6 @@
       background-color: #873f5b;
     }
 
-    
-
-    
     #letter {
       display: none;
       font-family: 'Quicksand', sans-serif;
@@ -106,8 +105,10 @@
       background-size: contain;
       background-repeat: no-repeat;
       animation: fall 6s linear infinite;
-      z-index: 0;
+      z-index: -1; /* put flowers behind the page content */
       pointer-events: none;
+      left: 0;
+      top: -10%;
     }
 
     @keyframes fall {
@@ -126,31 +127,32 @@
 #slideshow {
   max-width: 700px;
   width: 100%;
-  margin: 2rem auto;      /* centers container horizontally */
+  margin: 2rem auto;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   box-sizing: border-box;
-  padding: 0 1rem;        /* small side padding for mobile */
+  padding: 0 1rem;
+  position: relative;
 }
 
-/* Slideshow Images */
+/* Slideshow Images: responsive and consistent size */
 #slideshow img {
   display: none;
-  width: 500px;      /* same width */
-  height: 450px;     /* same height */
+  width: 100%;          /* fill container width */
+  max-width: 700px;     /* don't exceed container */
+  aspect-ratio: 4 / 3;  /* keep consistent aspect ratio */
   border-radius: 20px;
-  object-fit: cover; /* crops without distortion */
+  object-fit: cover;    /* crop consistently */
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   margin: 0 auto;
 }
 
-/* mobile adjustment */
+/* For very small screens reduce height */
 @media (max-width: 600px) {
   #slideshow img {
-    width: 100%;
-    height: 250px;
+    aspect-ratio: 16 / 9;
   }
 }
 
@@ -159,39 +161,7 @@
   display: block;
 }
 
-/* Fade animation (single definition) */
-@keyframes fade {
-  from { opacity: 0.4; }
-  to   { opacity: 1; }
-}
-
-#slideshow {
-  position: relative;   /* so arrows can float inside */
-}
-
-#slideshow .prev,
-#slideshow .next {
-  position: absolute;
-  top: 0%;
-  transform: translateY(-50%);
-  background: rgba(161, 83, 107, 0.7);
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 24px;
-  transition: background 0.2s ease;
-}
-
-#slideshow .prev:hover,
-#slideshow .next:hover {
-  background: rgba(161, 83, 107, 1);
-}
-
-#slideshow .prev { left: -50px; }   /* push outside left */
-#slideshow .next { right: -50px; }  /* push outside right */
-
+/* Removed .prev/.next button styles since toggle/buttons were removed */
 
   </style>
 </head>
@@ -229,45 +199,29 @@
   <img src="photo6.jpg" alt="Photo 6"/>
   <img src="photo7.jpg" alt="Photo 7"/>
   <img src="photo8.jpg" alt="Photo 8"/>
-
-        <!-- Navigation buttons -->
-  <button class="prev" onclick="changeSlide(-1)">❮</button>
-  <button class="next" onclick="changeSlide(1)">❯</button>
-      
 </div>
 
 <script>
 let slideIndex = 0;
 const slides = document.querySelectorAll("#slideshow img");
-let autoSlide; // for auto-sliding
 
 function showSlides(index) {
   if (!slides.length) return;
-  
   slides.forEach(s => s.classList.remove("active"));
-  slideIndex = (index + slides.length) % slides.length; // loop around
+  slideIndex = (index + slides.length) % slides.length;
   slides[slideIndex].classList.add("active");
 }
 
-// Auto slide
 function startAutoSlide() {
-  autoSlide = setInterval(() => {
-    changeSlide(1);
+  return setInterval(() => {
+    showSlides(slideIndex + 1);
   }, 2500);
 }
 
-// Manual navigation (arrows)
-function changeSlide(n) {
-  clearInterval(autoSlide); // stop auto when user clicks
-  showSlides(slideIndex + n);
-  startAutoSlide(); // restart auto
-}
-
-// Initialize slideshow
+// initialize
 showSlides(slideIndex);
-startAutoSlide();
+const autoSlide = startAutoSlide();
 </script>
-
 
     <h2>🌸 Wanna Leave a Reply? 🌸</h2>
 <input type="text" id="replyName" placeholder="Your nickname" style="width: 100%; padding: 10px; border-radius: 10px; margin-bottom: 10px;" />
@@ -288,13 +242,14 @@ startAutoSlide();
     if (input.toLowerCase() === 'rylca') {
       document.getElementById('form').style.display = 'none';
       document.getElementById('letter').style.display = 'block';
-      document.getElementById('bgMusic').play();
+      // try/catch because autoplay may be blocked by browsers
+      try { document.getElementById('bgMusic').play(); } catch(e){}
     } else {
       alert('Wrong passcode! Try again. 💌');
     }
   }
 
-  // Falling flowers animation
+  // Falling flowers animation (flowers are added behind content)
   setInterval(() => {
     const flower = document.createElement('div');
     flower.className = 'flower';
@@ -304,6 +259,7 @@ startAutoSlide();
     setTimeout(() => flower.remove(), 6000);
   }, 400);
 </script>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } 
@@ -324,20 +280,18 @@ from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
   // Load existing replies in real-time
   const replyContainer = document.getElementById("replyContainer");
-// Create query to get latest first
-const q = query(collection(db, "replies"), orderBy("createdAt", "desc"));
+  const q = query(collection(db, "replies"), orderBy("createdAt", "desc"));
 
-onSnapshot(q, (snapshot) => {
-  replyContainer.innerHTML = ""; // Clear current replies
-  snapshot.forEach((doc) => {
-
+  onSnapshot(q, (snapshot) => {
+    replyContainer.innerHTML = ""; // Clear current replies
+    snapshot.forEach((doc) => {
       const data = doc.data();
-const name = data.name || "Anonymous";
-const text = data.text;
-const date = data.createdAt?.toDate?.().toLocaleString() || "just now";
+      const name = data.name || "Anonymous";
+      const text = data.text;
+      const date = data.createdAt?.toDate?.().toLocaleString() || "just now";
 
-const p = document.createElement("p");
-p.innerHTML = `<strong>${name}</strong> <span style="font-size:0.8em; color:#666;">(${date})</span><br>${text}`;
+      const p = document.createElement("p");
+      p.innerHTML = `<strong>${name}</strong> <span style="font-size:0.8em; color:#666;">(${date})</span><br>${text}`;
       p.style = "background:#fff9f2; border-left:5px solid #a1536b; padding:10px; border-radius:8px; margin-bottom:10px;";
       replyContainer.appendChild(p);
     });
@@ -348,11 +302,11 @@ p.innerHTML = `<strong>${name}</strong> <span style="font-size:0.8em; color:#666
     const input = document.getElementById("replyInput").value.trim();
     if (input) {
       const name = document.getElementById("replyName").value.trim();
-await addDoc(collection(db, "replies"), {
-  name: name || "Anonymous",
-  text: input,
-  createdAt: new Date()
-});
+      await addDoc(collection(db, "replies"), {
+        name: name || "Anonymous",
+        text: input,
+        createdAt: new Date()
+      });
       document.getElementById("replyInput").value = "";
     }
   };
